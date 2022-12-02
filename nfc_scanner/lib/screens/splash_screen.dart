@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nfc_scanner/screens/ip_screen.dart';
 
 import 'nfc_scan.dart';
 
@@ -17,17 +18,12 @@ class _splash_screenState extends State<splash_screen> {
   }
   _navigationtoOnBoared()async{
     await Future.delayed(Duration(milliseconds: 1500),(){});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Nfc_scan()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Ip_adress()));
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage('assets/images/cairotrafic.png'),
-          //   ),
-          // ),
         child:  Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,

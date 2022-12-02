@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_manager/nfc_manager.dart';
 
 class Nfc_scan extends StatefulWidget {
-  const Nfc_scan({Key? key}) : super(key: key);
+  final String ip;
+  const Nfc_scan({Key? key, required this.ip}) : super(key: key);
 
   @override
   State<Nfc_scan> createState() => _Nfc_scanState();
@@ -48,24 +50,27 @@ class _Nfc_scanState extends State<Nfc_scan> {
       for (final element in res) {
         id = id + String.fromCharCode(element);
       }
+      print("This is res:$id");
       id = id.substring(3);
       List <String> data =id.split(",");
-      print("This is Id from Tag reader ! :${data[1]},\n This is name: ${data[0]}");
-
+     print("This is Id from Tag reader ! :${data[0]}");
+     String base_url=widget.ip+"/${data[0]}";
+     print(base_url);
       Response response= await http.get(
-        Uri.parse("http://192.168.1.10:3000/${data[1]}/${data[0]}"),
+        Uri.parse(base_url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
+          "Accept-Charset":"utf-8"
         },
       );
+
       if(response.statusCode == 200){
         print("Sent Reuest Successfully!");
-
       }
       else{
         print("Error in request! ");
       }
-      // NfcManager.instance.stopSession();
+      NfcManager.instance.stopSession();
     });
   }
 }
