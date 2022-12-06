@@ -1,4 +1,4 @@
-# nfc_scanner
+# gate_server_flutter
 
 A new Flutter project.
 

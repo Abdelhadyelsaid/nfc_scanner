@@ -1,26 +1,36 @@
+import 'dart:io';
 
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:nfc_scanner/screens/splash_screen.dart';
 
+import 'homepage.dart';
 
-void main(List<String> args) {
-  WidgetsFlutterBinding.ensureInitialized();
+void main(List<String> args) async{
   runApp(const MyApp());
+  if (Platform.isWindows) {
+    Size size = await DesktopWindow.getWindowSize();
+    print(size);
+    await DesktopWindow.setWindowSize(Size(1920,1080));
+
+    await DesktopWindow.setMinWindowSize(Size(1700,960));
+    await DesktopWindow.setMaxWindowSize(Size(1920,1080));
+
+    //  await DesktopWindow.resetMaxWindowSize();
+    await DesktopWindow.toggleFullScreen();
+    bool isFullScreen = await DesktopWindow.getFullScreen();
+    await DesktopWindow.setFullScreen(true);
+    // await DesktopWindow.setFullScreen(false);
+  }
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home:splash_screen()
-      );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
   }
 }
